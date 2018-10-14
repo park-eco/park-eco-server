@@ -10,6 +10,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using ParkEco.CoreAPI.Data;
+using ParkEco.CoreAPI.Repositories.Interfaces;
+using ParkEco.CoreAPI.Repositories.Implementations;
+using ParkEco.CoreAPI.Services.Interfaces;
+using ParkEco.CoreAPI.Services.Implementations;
 
 namespace ParkEco.CoreAPI
 {
@@ -27,6 +33,12 @@ namespace ParkEco.CoreAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddDbContext<ParkingEcoServerContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IParkingLotRepository, ParkingLotRepository>();
+
+            services.AddTransient<IParkingLotService, ParkingLotService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
