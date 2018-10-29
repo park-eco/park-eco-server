@@ -16,17 +16,27 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
 
         void IParkingLotRepository.Create(ParkingLot parkingLot)
         {
-            throw new NotImplementedException();
+            dbContext.ParkingLots.Add(parkingLot);
+            dbContext.SaveChanges();
         }
 
         void IParkingLotRepository.Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var idToDelete = (from records
+                              in dbContext.ParkingLots
+                              where records.Id == id
+                              select records).Single();
+            dbContext.ParkingLots.Remove(idToDelete);
+            dbContext.SaveChanges();
         }
 
         ParkingLot IParkingLotRepository.Get(Guid id)
         {
-            throw new NotImplementedException();
+            var result = (from records
+                          in dbContext.ParkingLots
+                          where records.Id == id
+                          select records).Single();
+            return result;
         }
 
         List<ParkingLot> IParkingLotRepository.GetAll()
@@ -39,7 +49,8 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
 
         void IParkingLotRepository.Update(ParkingLot parkingLot)
         {
-            throw new NotImplementedException();
+            dbContext.ParkingLots.Update(parkingLot);
+            dbContext.SaveChanges();
         }
     }
 }

@@ -16,6 +16,7 @@ using ParkEco.CoreAPI.Repositories.Interfaces;
 using ParkEco.CoreAPI.Repositories.Implementations;
 using ParkEco.CoreAPI.Services.Interfaces;
 using ParkEco.CoreAPI.Services.Implementations;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ParkEco.CoreAPI
 {
@@ -36,6 +37,15 @@ namespace ParkEco.CoreAPI
             services.AddDbContext<ParkingEcoServerContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "ParkEco Core API",
+                    Version = "v1"
+                });
+            });
+
             services.AddTransient<IParkingLotRepository, ParkingLotRepository>();
 
             services.AddTransient<IParkingLotService, ParkingLotService>();
@@ -47,6 +57,16 @@ namespace ParkEco.CoreAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                // Enable middleware to serve generated Swagger as a JSON endpoint.
+                app.UseSwagger();
+
+                // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+                // specifying the Swagger JSON endpoint.
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
             }
             else
             {

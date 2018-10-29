@@ -65,5 +65,30 @@ namespace ParkEco.CoreAPI.UnitTests
             Assert.Equal(expectedList[0].Description, actualList[0].Description);
             Assert.Equal(expectedList[0].Sessions, actualList[0].Sessions);
         }
+
+        [Fact]
+        public void Delete_ShouldCallDeleteMethodInRepository()
+        {
+            var mockParkingLotRepository = new Mock<IParkingLotRepository>();
+            mockParkingLotRepository.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
+
+            var service = new ParkingLotService(mockParkingLotRepository.Object);
+            (service as IParkingLotService).Delete(Guid.NewGuid());
+
+            mockParkingLotRepository.Verify(mock => mock.Delete(It.IsAny<Guid>()), Times.Once());
+        }
+
+        [Fact]
+        public void Delete_ShouldPassGuidToRepositoryMethod()
+        {
+            var mockParkingLotRepository = new Mock<IParkingLotRepository>();
+            var expectedId = Guid.NewGuid();
+            mockParkingLotRepository.Setup(repo => repo.Delete(expectedId)).Verifiable();
+
+            var service = new ParkingLotService(mockParkingLotRepository.Object);
+            (service as IParkingLotService).Delete(expectedId);
+
+            mockParkingLotRepository.Verify(mock => mock.Delete(expectedId), Times.Once());
+        }
     }
 }

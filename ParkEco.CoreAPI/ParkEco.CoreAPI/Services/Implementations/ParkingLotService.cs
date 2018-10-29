@@ -25,9 +25,15 @@ namespace ParkEco.CoreAPI.Services.Implementations
             });
         }
 
-        void IParkingLotService.Get(Guid id)
+        void IParkingLotService.Delete(Guid id)
         {
-            throw new NotImplementedException();
+            parkingLotRepository.Delete(id);
+        }
+
+        ParkingLot IParkingLotService.Get(Guid id)
+        {
+            var parkingLot = parkingLotRepository.Get(id);
+            return parkingLot;
         }
 
         List<ParkingLot> IParkingLotService.GetAll()
