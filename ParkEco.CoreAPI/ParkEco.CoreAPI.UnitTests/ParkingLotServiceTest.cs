@@ -18,7 +18,7 @@ namespace ParkEco.CoreAPI.UnitTests
             mockParkingLotRepository.Setup(repo => repo.Create(It.IsAny<ParkingLot>())).Verifiable();
 
             var service = new ParkingLotService(mockParkingLotRepository.Object);
-            (service as IParkingLotService).Create("expected name", "expected address");
+            (service as IParkingLotService).Create("expected name", "expected address", "expected description");
 
             mockParkingLotRepository.Verify(mock => mock.Create(It.IsAny<ParkingLot>()), Times.Once());
         }

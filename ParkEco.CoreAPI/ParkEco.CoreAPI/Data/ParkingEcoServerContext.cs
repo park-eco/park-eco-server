@@ -14,5 +14,9 @@ namespace ParkEco.CoreAPI.Data
         { }
 
         public DbSet<ParkingLot> ParkingLots { get; set; }
+
+        public DbSet<Session> Sessions { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
     }
 }

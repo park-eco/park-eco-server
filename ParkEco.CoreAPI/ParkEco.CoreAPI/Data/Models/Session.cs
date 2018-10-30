@@ -14,5 +14,7 @@ namespace ParkEco.CoreAPI.Data.Models
 
         public Guid ParkingLotId { get; set; }
         public ParkingLot ParkingLot { get; set; }
+
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

@@ -16,12 +16,13 @@ namespace ParkEco.CoreAPI.Services.Implementations
             this.parkingLotRepository = parkingLotRepository;
         }
 
-        void IParkingLotService.Create(string name, string address)
+        void IParkingLotService.Create(string name, string address, string description)
         {
             parkingLotRepository.Create(new Data.Models.ParkingLot()
             {
                 Name = name,
-                Address = address
+                Address = address,
+                Description = description
             });
         }
 

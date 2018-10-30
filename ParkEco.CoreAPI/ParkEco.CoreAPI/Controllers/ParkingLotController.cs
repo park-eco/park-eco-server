@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkEco.CoreAPI.Controllers.Models;
 using ParkEco.CoreAPI.Data.Models;
 using ParkEco.CoreAPI.Services.Interfaces;
 
@@ -23,6 +24,20 @@ namespace ParkEco.CoreAPI.Controllers
         public ActionResult<List<ParkingLot>> GetAll()
         {
             return parkingLotService.GetAll();
+        }
+
+        [HttpPost]
+        public ActionResult CreateNewParkingLot([FromBody]CreateNewParkingLotCommand command)
+        {
+            try
+            {
+                parkingLotService.Create(command.Name, command.Address, command.Description);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

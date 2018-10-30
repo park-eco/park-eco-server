@@ -9,7 +9,7 @@ namespace ParkEco.CoreAPI.Services.Interfaces
 
     public interface IParkingLotService
     {
-        void Create(string name, string address);
+        void Create(string name, string address, string description);
         void Update();
         void Delete(Guid id);
 
