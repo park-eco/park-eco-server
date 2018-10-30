@@ -40,5 +40,10 @@ namespace ParkEco.CoreAPI.Services.Implementations
         {
             return parkingLotRepository.GetAll();
         }
+
+        void IParkingLotService.Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
