@@ -42,9 +42,15 @@ namespace ParkEco.CoreAPI.Services.Implementations
             return parkingLotRepository.GetAll();
         }
 
-        void IParkingLotService.Update()
+        void IParkingLotService.Update(Guid id, string name, string address, string description)
         {
-            throw new NotImplementedException();
+            parkingLotRepository.Update(new ParkingLot()
+            {
+                Id = id,
+                Name = name,
+                Address = address,
+                Description = description
+            });
         }
     }
 }

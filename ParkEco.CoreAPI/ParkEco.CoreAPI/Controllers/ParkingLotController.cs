@@ -39,5 +39,35 @@ namespace ParkEco.CoreAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateParkingLot(Guid id, [FromBody]CreateNewParkingLotCommand updateCommand)
+        {
+            try
+            {
+                parkingLotService.Update(id, 
+                    updateCommand.Name, updateCommand.Address, updateCommand.Description);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteParkingLot(Guid id)
+        {
+            try
+            {
+                parkingLotService.Delete(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }

@@ -16,7 +16,7 @@ namespace ParkEco.CoreAPI.UnitTests
         public void CreateNewParkingLot_ShouldCallCreateMethodInService()
         {
             var mockParkingLotService = new Mock<IParkingLotService>();
-            mockParkingLotService.Setup(service => 
+            mockParkingLotService.Setup(service =>
                 service
                     .Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())
                 )
@@ -30,7 +30,7 @@ namespace ParkEco.CoreAPI.UnitTests
                 Description = "description"
             });
 
-            mockParkingLotService.Verify(mock => mock.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), 
+            mockParkingLotService.Verify(mock => mock.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
                 Times.Once());
         }
 
@@ -70,6 +70,44 @@ namespace ParkEco.CoreAPI.UnitTests
 
             Assert.Equal(expectedReturnParkingLot.Count, result.Value.Count);
             mockParkingLotService.Verify(mock => mock.GetAll(), Times.Once);
+        }
+
+        [Fact]
+        public void Update_ShouldCallUpdateMethodInService()
+        {
+            var mockParkingLotService = new Mock<IParkingLotService>();
+            mockParkingLotService.Setup(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Verifiable();
+
+            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var actionId = Guid.NewGuid();
+            var actionUpdateCommand = new Controllers.Models.CreateNewParkingLotCommand()
+            {
+                Address = "A",
+                Description = "D",
+                Name = "N"
+            };
+            var result = controller.UpdateParkingLot(actionId, actionUpdateCommand) 
+                as Microsoft.AspNetCore.Mvc.StatusCodeResult;
+
+            mockParkingLotService.Verify(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
+                Times.Once);
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+        }
+
+        [Fact]
+        public void Delete_ShouldCallDeleteMethodInService()
+        {
+            var mockParkingLotService = new Mock<IParkingLotService>();
+            mockParkingLotService.Setup(service => service.Delete(It.IsAny<Guid>())).Verifiable();
+
+            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var actionId = Guid.NewGuid();
+            var result = controller.DeleteParkingLot(actionId) 
+                as Microsoft.AspNetCore.Mvc.StatusCodeResult;
+
+            mockParkingLotService.Verify(service => service.Delete(actionId), Times.Once);
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
     }
 }

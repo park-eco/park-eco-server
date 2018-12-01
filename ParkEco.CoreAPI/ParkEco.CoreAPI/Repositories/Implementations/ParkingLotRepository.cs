@@ -49,6 +49,10 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
 
         void IParkingLotRepository.Update(ParkingLot parkingLot)
         {
+            if (!dbContext.ParkingLots.Where(lot => lot.Id == parkingLot.Id).Any())
+            {
+                throw new ArgumentException("Required parking lot does not exist in this database.");
+            }
             dbContext.ParkingLots.Update(parkingLot);
             dbContext.SaveChanges();
         }
