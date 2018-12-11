@@ -76,7 +76,7 @@ namespace ParkEco.CoreAPI.UnitTests
         public void Update_ShouldCallUpdateMethodInService()
         {
             var mockParkingLotService = new Mock<IParkingLotService>();
-            mockParkingLotService.Setup(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            mockParkingLotService.Setup(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()))
                 .Verifiable();
 
             var controller = new ParkingLotController(mockParkingLotService.Object);
@@ -90,7 +90,7 @@ namespace ParkEco.CoreAPI.UnitTests
             var result = controller.UpdateParkingLot(actionId, actionUpdateCommand) 
                 as Microsoft.AspNetCore.Mvc.StatusCodeResult;
 
-            mockParkingLotService.Verify(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
+            mockParkingLotService.Verify(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()),
                 Times.Once);
             Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
         }
