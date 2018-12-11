@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,5 +23,9 @@ namespace ParkEco.CoreAPI.Data.Models
         public bool IsReturned { get; set; } = false;
 
         public bool IsValid { get; set; } = true;
+
+        [ForeignKey("ParkingLotAttendant")]
+        public Guid ParkingLotAttendantId { get; set; }
+        public ParkingLotAttendant ParkingLotAttendant { get; set; }
     }
 }

@@ -46,7 +46,8 @@ namespace ParkEco.CoreAPI.Controllers
             try
             {
                 parkingLotService.Update(id, 
-                    updateCommand.Name, updateCommand.Address, updateCommand.Description);
+                    updateCommand.Name, updateCommand.Address, updateCommand.Description,
+                    updateCommand.Longitude, updateCommand.Latitude);
                 return Ok();
             }
             catch (Exception)
