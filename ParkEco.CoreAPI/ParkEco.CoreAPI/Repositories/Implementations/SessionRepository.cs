@@ -17,6 +17,7 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
         void ISessionRepository.Create(Session session)
         {
             dbContext.Sessions.Add(session);
+            dbContext.SaveChanges();
         }
 
         void ISessionRepository.Delete(Guid id)
@@ -25,6 +26,7 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
             if (sessionToDelete != null)
             {
                 dbContext.Sessions.Remove(sessionToDelete);
+                dbContext.SaveChanges();
                 return;
             }
             else
@@ -64,9 +66,19 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
             return dbContext.Sessions.ToList();
         }
 
+        List<Session> ISessionRepository.GetSessionsOfParkingLot(Guid parkingLotId)
+        {
+            var result = (from records
+                         in dbContext.Sessions
+                          where records.ParkingLotId == parkingLotId
+                          select records).ToList();
+            return result;
+        }
+
         void ISessionRepository.Update(Session session)
         {
             dbContext.Sessions.Update(session);
+            dbContext.SaveChanges();
         }
     }
 }

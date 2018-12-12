@@ -27,6 +27,8 @@ namespace ParkEco.CoreAPI.Repositories.Interfaces
 
         List<Session> GetAll();
 
+        List<Session> GetSessionsOfParkingLot(Guid parkingLotId);
+
         void Create(Session session);
 
         void Update(Session session);
