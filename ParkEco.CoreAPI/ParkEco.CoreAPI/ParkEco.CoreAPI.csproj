@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20181212153825_AddRelationshipBetweenAttendantAndParkingLot.cs" />
+    <Compile Remove="Migrations\20181212153825_AddRelationshipBetweenAttendantAndParkingLot.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

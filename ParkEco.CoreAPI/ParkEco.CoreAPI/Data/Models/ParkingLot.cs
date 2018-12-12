@@ -19,5 +19,7 @@ namespace ParkEco.CoreAPI.Data.Models
         public double Latitude { get; set; }
 
         public ICollection<Session> Sessions { get; set; }
+        
+        public ICollection<AttendantAssignment> AttendantAssignments { get; set; }
     }
 }
