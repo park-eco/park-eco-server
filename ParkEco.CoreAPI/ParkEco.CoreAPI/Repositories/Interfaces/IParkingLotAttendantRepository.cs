@@ -11,6 +11,7 @@ namespace ParkEco.CoreAPI.Repositories.Interfaces
         void Create(ParkingLotAttendant parkingLotAttendent);
         void Update(ParkingLotAttendant parkingLotAttendant);
         ParkingLotAttendant Get(string username);
+        List<ParkingLotAttendant> GetAll();
         void Delete(string username);
 
         bool IsPasswordCorrect(string username, string toBeVerifiedPassword);

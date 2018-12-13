@@ -48,6 +48,11 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
 
         }
 
+        List<ParkingLotAttendant> IParkingLotAttendantRepository.GetAll()
+        {
+            return dbContext.ParkingLotAttendants.ToList();
+        }
+
         bool IParkingLotAttendantRepository.IsPasswordCorrect(string username, string toBeVerifiedPassword)
         {
             var user = (this as IParkingLotAttendantRepository).Get(username);

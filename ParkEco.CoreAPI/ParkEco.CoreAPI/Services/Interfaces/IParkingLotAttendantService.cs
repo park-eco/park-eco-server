@@ -14,7 +14,7 @@ namespace ParkEco.CoreAPI.Services.Interfaces
 
         List<ParkingLotAttendant> GetAll();
 
-        void UpdateInformation();
+        void UpdateInformation(string username, string name, string email, string phoneNumber, string password);
 
         void DeleteAttendant(string username);
     }
