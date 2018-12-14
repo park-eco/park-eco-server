@@ -41,7 +41,10 @@ namespace ParkEco.CoreAPI.UnitTests
                         {
                             
                         }
-                    }
+                    },
+                    Longitude = 1.0f,
+                    Latitude = 1.0f,
+                    AttendantAssignments = new List<AttendantAssignment>()
                 },
                 new ParkingLot()
                 {
@@ -49,7 +52,10 @@ namespace ParkEco.CoreAPI.UnitTests
                     Name = "name 222",
                     Address = "address 222",
                     Description = "description 222",
-                    Sessions = new List<Session>()
+                    Sessions = new List<Session>(),
+                    Longitude = 1.0f,
+                    Latitude = 1.0f,
+                    AttendantAssignments = new List<AttendantAssignment>()
                 }
             };
             mockParkingLotRepository.Setup(repo => repo.GetAll()).Returns(expectedList);
