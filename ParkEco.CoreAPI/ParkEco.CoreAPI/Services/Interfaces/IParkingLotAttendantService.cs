@@ -10,6 +10,8 @@ namespace ParkEco.CoreAPI.Services.Interfaces
     {
         ParkingLotAttendant RegisterNewAttendant(string name, string username, string email, string phoneNumber);
 
+        bool IsPasswordCorrect(string username, string passwordToBeVerified);
+
         ParkingLotAttendant Get(string username);
 
         List<ParkingLotAttendant> GetAll();

@@ -11,6 +11,7 @@ namespace ParkEco.CoreAPI.Services.Implementations
     public class ParkingLotAttendantService : IParkingLotAttendantService
     {
         private readonly IParkingLotAttendantRepository parkingLotAttendantRepository;
+        private readonly IAttendantAssignmentRepository attendantAssignmentRepository;
         public ParkingLotAttendantService(IParkingLotAttendantRepository parkingLotAttendantRepository)
         {
             this.parkingLotAttendantRepository = parkingLotAttendantRepository;
@@ -29,6 +30,11 @@ namespace ParkEco.CoreAPI.Services.Implementations
         List<ParkingLotAttendant> IParkingLotAttendantService.GetAll()
         {
             return parkingLotAttendantRepository.GetAll();
+        }
+
+        bool IParkingLotAttendantService.IsPasswordCorrect(string username, string passwordToBeVerified)
+        {
+            return parkingLotAttendantRepository.IsPasswordCorrect(username, passwordToBeVerified);
         }
 
         ParkingLotAttendant IParkingLotAttendantService.RegisterNewAttendant(string name, string username, string email, string phoneNumber)
