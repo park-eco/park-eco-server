@@ -63,9 +63,20 @@ namespace ParkEco.CoreAPI.Controllers
 
         [HttpGet()]
         public ActionResult<List<ParkingLotAttendant>> GetAllAttendants(
-            [FromQuery]Guid? parkingLotId = null
+            [FromQuery]Guid? parkingLotId = null,
+            [FromQuery]string username = null
             )
         {
+            if (username != null)
+            {
+                var queryResult = parkingLotAttendantService.Get(username);
+                var returnResult = new List<ParkingLotAttendant>
+                {
+                    queryResult
+                };
+                return returnResult;
+            }
+
             if (parkingLotId.HasValue)
             {
                 return StatusCode(StatusCodes.Status501NotImplemented);
