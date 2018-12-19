@@ -11,11 +11,17 @@ namespace ParkEco.CoreAPI.Data.Models
     {
         public Guid Id { get; set; }
 
-        [Required]
-        public Guid SessionId { get; set; }
-        public Session Session { get; set; }
+        //[Required]
+        //public Guid SessionId { get; set; }
+        //public Session Session { get; set; }
 
+        [Required]
         public string Plate { get; set; }
+        [Required]
+        public Guid SecretKey { get; set; }
+
+        [Required]
+        public DateTime DateOfCreated { get; set; }
 
         /// <summary>
         /// When a ticket is used to take a car out, the ticket is now returned.
@@ -24,6 +30,7 @@ namespace ParkEco.CoreAPI.Data.Models
 
         public bool IsValid { get; set; } = true;
 
+        [Required]
         [ForeignKey("ParkingLotAttendant")]
         public Guid ParkingLotAttendantId { get; set; }
         public ParkingLotAttendant ParkingLotAttendant { get; set; }

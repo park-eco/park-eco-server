@@ -54,6 +54,7 @@ namespace ParkEco.CoreAPI
             services.AddTransient<IParkingLotService, ParkingLotService>();
             services.AddTransient<ISessionService, SessionService>();
             services.AddTransient<IParkingLotAttendantService, ParkingLotAttendantService>();
+            services.AddTransient<ITicketService, TicketService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
