@@ -22,7 +22,7 @@ namespace ParkEco.CoreAPI.UnitTests
                 )
                 .Verifiable();
 
-            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var controller = new ParkingLotsController(mockParkingLotService.Object);
             var result = controller.CreateNewParkingLot(new Controllers.Models.CreateNewParkingLotCommand()
             {
                 Name = "name",
@@ -44,7 +44,7 @@ namespace ParkEco.CoreAPI.UnitTests
                 )
                 .Throws(new Exception());
 
-            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var controller = new ParkingLotsController(mockParkingLotService.Object);
             var result = controller.CreateNewParkingLot(new Controllers.Models.CreateNewParkingLotCommand()
             {
                 Name = "name",
@@ -65,7 +65,7 @@ namespace ParkEco.CoreAPI.UnitTests
             };
             mockParkingLotService.Setup(service => service.GetAll()).Returns(expectedReturnParkingLot).Verifiable();
 
-            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var controller = new ParkingLotsController(mockParkingLotService.Object);
             var result = controller.GetAll();
 
             Assert.Equal(expectedReturnParkingLot.Count, result.Value.Count);
@@ -79,7 +79,7 @@ namespace ParkEco.CoreAPI.UnitTests
             mockParkingLotService.Setup(service => service.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<double>(), It.IsAny<double>()))
                 .Verifiable();
 
-            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var controller = new ParkingLotsController(mockParkingLotService.Object);
             var actionId = Guid.NewGuid();
             var actionUpdateCommand = new Controllers.Models.CreateNewParkingLotCommand()
             {
@@ -101,7 +101,7 @@ namespace ParkEco.CoreAPI.UnitTests
             var mockParkingLotService = new Mock<IParkingLotService>();
             mockParkingLotService.Setup(service => service.Delete(It.IsAny<Guid>())).Verifiable();
 
-            var controller = new ParkingLotController(mockParkingLotService.Object);
+            var controller = new ParkingLotsController(mockParkingLotService.Object);
             var actionId = Guid.NewGuid();
             var result = controller.DeleteParkingLot(actionId) 
                 as Microsoft.AspNetCore.Mvc.StatusCodeResult;

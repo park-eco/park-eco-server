@@ -1,4 +1,5 @@
-﻿using ParkEco.CoreAPI.Data.Models;
+﻿using ParkEco.CoreAPI.Controllers.Models;
+using ParkEco.CoreAPI.Data.Models;
 using ParkEco.CoreAPI.Repositories.Interfaces;
 using ParkEco.CoreAPI.Services.Interfaces;
 using System;
@@ -40,6 +41,26 @@ namespace ParkEco.CoreAPI.Services.Implementations
         List<ParkingLot> IParkingLotService.GetAll()
         {
             return parkingLotRepository.GetAll();
+        }
+
+        List<StatusQueryModel> IParkingLotService.QueryStatus()
+        {
+            var parkingLots = parkingLotRepository.GetAll();
+            List<StatusQueryModel> result = new List<StatusQueryModel>();
+            foreach (var parkingLot in parkingLots)
+            {
+                var fullPercentage = (parkingLot.MaximumCapacity != 0) ?
+                    (parkingLot.CurrentCount / parkingLot.MaximumCapacity) * 100
+                    : 0;
+                result.Add(new StatusQueryModel()
+                {
+                    ParkingLotName = parkingLot.Name,
+                    Longitude = parkingLot.Longitude,
+                    Latitude = parkingLot.Latitude,
+                    FullPercentage = fullPercentage
+                });
+            }
+            return result;
         }
 
         void IParkingLotService.Update(Guid id, string name, string address, string description, double longitude, double latitude)

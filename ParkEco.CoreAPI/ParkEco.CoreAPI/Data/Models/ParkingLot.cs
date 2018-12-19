@@ -18,6 +18,9 @@ namespace ParkEco.CoreAPI.Data.Models
         public double Longitude { get; set; }
         public double Latitude { get; set; }
 
+        public int MaximumCapacity { get; set; }
+        public int CurrentCount { get; set; }
+
         public ICollection<Session> Sessions { get; set; }
         
         public ICollection<AttendantAssignment> AttendantAssignments { get; set; }

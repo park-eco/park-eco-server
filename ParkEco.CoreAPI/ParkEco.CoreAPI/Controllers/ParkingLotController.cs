@@ -12,10 +12,10 @@ namespace ParkEco.CoreAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ParkingLotController : ControllerBase
+    public class ParkingLotsController : ControllerBase
     {
         private readonly IParkingLotService parkingLotService;
-        public ParkingLotController(IParkingLotService parkingLotService)
+        public ParkingLotsController(IParkingLotService parkingLotService)
         {
             this.parkingLotService = parkingLotService;
         }
@@ -24,6 +24,12 @@ namespace ParkEco.CoreAPI.Controllers
         public ActionResult<List<ParkingLot>> GetAll()
         {
             return parkingLotService.GetAll();
+        }
+
+        [HttpGet("status")]
+        public ActionResult<List<StatusQueryModel>> QueryStatus()
+        {
+            return parkingLotService.QueryStatus();
         }
 
         [HttpPost]

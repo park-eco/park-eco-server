@@ -15,5 +15,7 @@ namespace ParkEco.CoreAPI.Services.Interfaces
 
         ParkingLot Get(Guid id);
         List<ParkingLot> GetAll();
-    }
+
+        List<Controllers.Models.StatusQueryModel> QueryStatus();
+    } 
 }
