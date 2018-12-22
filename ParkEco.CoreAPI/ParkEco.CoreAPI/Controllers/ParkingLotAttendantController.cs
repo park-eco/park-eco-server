@@ -86,5 +86,19 @@ namespace ParkEco.CoreAPI.Controllers
                 return parkingLotAttendantService.GetAll();
             }
         }
+
+        [HttpDelete("{username}")]
+        public ActionResult DeleteAttendant(string username)
+        {
+            try
+            {
+                parkingLotAttendantService.DeleteAttendant(username);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
