@@ -51,7 +51,7 @@ namespace ParkEco.CoreAPI.Controllers
         {
             try
             {
-                parkingLotService.Update(id, 
+                parkingLotService.Update(id,
                     updateCommand.Name, updateCommand.Address, updateCommand.Description,
                     updateCommand.Longitude, updateCommand.Latitude);
                 return Ok();
@@ -73,6 +73,21 @@ namespace ParkEco.CoreAPI.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet("report")]
+        public ActionResult<List<ReportQueryModel>> GetReports(
+            [FromQuery]Guid? parkingLotId = null
+            )
+        {
+            if (parkingLotId.HasValue)
+            {
+                parkingLotService.GetReport(parkingLotId.Value);
+            }
+            else
+            {
+                parkingLotService.GetReports();
             }
         }
 

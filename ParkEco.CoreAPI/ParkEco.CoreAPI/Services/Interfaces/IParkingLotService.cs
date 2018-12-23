@@ -17,5 +17,18 @@ namespace ParkEco.CoreAPI.Services.Interfaces
         List<ParkingLot> GetAll();
 
         List<Controllers.Models.StatusQueryModel> QueryStatus();
+
+        /// <summary>
+        /// Get reports of all available parking lots.
+        /// </summary>
+        /// <returns></returns>
+        List<Controllers.Models.ReportQueryModel> GetReports();
+
+        /// <summary>
+        /// Get report for a specified parking lot.
+        /// </summary>
+        /// <param name="parkingLotId"></param>
+        /// <returns></returns>
+        Controllers.Models.ReportQueryModel GetReport(Guid parkingLotId);
     } 
 }
