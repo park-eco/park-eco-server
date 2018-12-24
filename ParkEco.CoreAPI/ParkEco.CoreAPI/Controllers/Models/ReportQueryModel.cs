@@ -11,6 +11,6 @@ namespace ParkEco.CoreAPI.Controllers.Models
         public List<string> ParkingLotName { get; set; }
         public List<string> Label { get; set; }
 
-        public List<ReportItem> ReportItems { get; set; }
+        public List<int> ReportItems { get; set; }
     }
 }

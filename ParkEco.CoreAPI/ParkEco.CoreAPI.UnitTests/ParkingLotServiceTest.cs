@@ -16,8 +16,10 @@ namespace ParkEco.CoreAPI.UnitTests
         {
             var mockParkingLotRepository = new Mock<IParkingLotRepository>();
             mockParkingLotRepository.Setup(repo => repo.Create(It.IsAny<ParkingLot>())).Verifiable();
+            var stubTicketRepository = new Mock<ITicketRepository>();
+            var stubAttendantAssignmentRepository = new Mock<IAttendantAssignmentRepository>();
 
-            var service = new ParkingLotService(mockParkingLotRepository.Object);
+            var service = new ParkingLotService(mockParkingLotRepository.Object, stubTicketRepository.Object, stubAttendantAssignmentRepository.Object);
             (service as IParkingLotService).Create("expected name", "expected address", "expected description");
 
             mockParkingLotRepository.Verify(mock => mock.Create(It.IsAny<ParkingLot>()), Times.Once());
@@ -59,8 +61,10 @@ namespace ParkEco.CoreAPI.UnitTests
                 }
             };
             mockParkingLotRepository.Setup(repo => repo.GetAll()).Returns(expectedList);
+            var stubTicketRepository = new Mock<ITicketRepository>();
+            var stubAttendantAssignmentRepository = new Mock<IAttendantAssignmentRepository>();
 
-            var service = new ParkingLotService(mockParkingLotRepository.Object);
+            var service = new ParkingLotService(mockParkingLotRepository.Object, stubTicketRepository.Object, stubAttendantAssignmentRepository.Object);
             var actualList = (service as IParkingLotService).GetAll();
 
             Assert.Equal(expectedList, actualList);
@@ -77,8 +81,10 @@ namespace ParkEco.CoreAPI.UnitTests
         {
             var mockParkingLotRepository = new Mock<IParkingLotRepository>();
             mockParkingLotRepository.Setup(repo => repo.Delete(It.IsAny<Guid>())).Verifiable();
+            var stubTicketRepository = new Mock<ITicketRepository>();
+            var stubAttendantAssignmentRepository = new Mock<IAttendantAssignmentRepository>();
 
-            var service = new ParkingLotService(mockParkingLotRepository.Object);
+            var service = new ParkingLotService(mockParkingLotRepository.Object, stubTicketRepository.Object, stubAttendantAssignmentRepository.Object);
             (service as IParkingLotService).Delete(Guid.NewGuid());
 
             mockParkingLotRepository.Verify(mock => mock.Delete(It.IsAny<Guid>()), Times.Once());
@@ -90,8 +96,10 @@ namespace ParkEco.CoreAPI.UnitTests
             var mockParkingLotRepository = new Mock<IParkingLotRepository>();
             var expectedId = Guid.NewGuid();
             mockParkingLotRepository.Setup(repo => repo.Delete(expectedId)).Verifiable();
+            var stubTicketRepository = new Mock<ITicketRepository>();
+            var stubAttendantAssignmentRepository = new Mock<IAttendantAssignmentRepository>();
 
-            var service = new ParkingLotService(mockParkingLotRepository.Object);
+            var service = new ParkingLotService(mockParkingLotRepository.Object, stubTicketRepository.Object, stubAttendantAssignmentRepository.Object);
             (service as IParkingLotService).Delete(expectedId);
 
             mockParkingLotRepository.Verify(mock => mock.Delete(expectedId), Times.Once());

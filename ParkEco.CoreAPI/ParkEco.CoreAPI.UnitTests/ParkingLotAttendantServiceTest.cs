@@ -40,8 +40,10 @@ namespace ParkEco.CoreAPI.UnitTests
                 }
             };
             mockParkingLotAttendantRepository.Setup(repo => repo.GetAll()).Returns(expectedList);
+            var stubAttendantAssignmentRepository = new Mock<IAttendantAssignmentRepository>();
+            var stubParkingLotRepository = new Mock<IParkingLotRepository>();
 
-            var service = new ParkingLotAttendantService(mockParkingLotAttendantRepository.Object);
+            var service = new ParkingLotAttendantService(mockParkingLotAttendantRepository.Object, stubAttendantAssignmentRepository.Object, stubParkingLotRepository.Object);
             var actualList = (service as IParkingLotAttendantService).GetAll();
 
             Assert.Equal(expectedList, actualList);
@@ -65,7 +67,10 @@ namespace ParkEco.CoreAPI.UnitTests
             mockParkingLotAttendantRepository.Setup(repo => repo.Get(It.Is<string>(val => val == expectedUser.Username)))
             .Returns(expectedUser);
 
-            var service = new ParkingLotAttendantService(mockParkingLotAttendantRepository.Object);
+            var stubAttendantAssignmentRepository = new Mock<IAttendantAssignmentRepository>();
+            var stubParkingLotRepository = new Mock<IParkingLotRepository>();
+
+            var service = new ParkingLotAttendantService(mockParkingLotAttendantRepository.Object, stubAttendantAssignmentRepository.Object, stubParkingLotRepository.Object);
             var actualUser = (service as IParkingLotAttendantService).Get(expectedUser.Username);
 
             Assert.Equal(expectedUser, actualUser);

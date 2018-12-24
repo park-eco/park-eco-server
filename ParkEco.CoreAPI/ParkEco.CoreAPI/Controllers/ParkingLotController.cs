@@ -76,18 +76,21 @@ namespace ParkEco.CoreAPI.Controllers
             }
         }
 
-        [HttpGet("report")]
-        public ActionResult<List<ReportQueryModel>> GetReports(
+        [HttpGet("report-daily")]
+        public ActionResult<ReportQueryModel> GetReports(
+            [FromQuery]DateTime from,
+            [FromQuery]DateTime to,
             [FromQuery]Guid? parkingLotId = null
             )
         {
             if (parkingLotId.HasValue)
             {
-                parkingLotService.GetReport(parkingLotId.Value);
+                return parkingLotService.GetDailyReport(parkingLotId.Value,
+                    from, to);
             }
             else
             {
-                parkingLotService.GetReports();
+                return parkingLotService.GetReports();
             }
         }
 

@@ -14,6 +14,7 @@ namespace ParkEco.CoreAPI.Repositories.Interfaces
 
         Ticket Get(Guid id);
         List<Ticket> GetAll();
+        List<Ticket> GetByParkingAttendant(Guid parkingLotAttendantId);
 
         bool Verify(string plate, Guid secretKey);
     }

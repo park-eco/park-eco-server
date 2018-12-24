@@ -12,9 +12,16 @@ namespace ParkEco.CoreAPI.Services.Implementations
     public class ParkingLotService : IParkingLotService
     {
         private readonly IParkingLotRepository parkingLotRepository;
-        public ParkingLotService(IParkingLotRepository parkingLotRepository)
+        private readonly ITicketRepository ticketRepository;
+        private readonly IAttendantAssignmentRepository attendantAssignmentRepository;
+        public ParkingLotService(
+            IParkingLotRepository parkingLotRepository, 
+            ITicketRepository ticketRepository,
+            IAttendantAssignmentRepository attendantAssignmentRepository)
         {
             this.parkingLotRepository = parkingLotRepository;
+            this.ticketRepository = ticketRepository;
+            this.attendantAssignmentRepository = attendantAssignmentRepository;
         }
 
         void IParkingLotService.Create(string name, string address, string description)
@@ -41,6 +48,46 @@ namespace ParkEco.CoreAPI.Services.Implementations
         List<ParkingLot> IParkingLotService.GetAll()
         {
             return parkingLotRepository.GetAll();
+        }
+
+        ReportQueryModel IParkingLotService.GetDailyReport(Guid parkingLotId, DateTime from, DateTime to)
+        {
+            List<Ticket> tickets = new List<Ticket>();
+            foreach(var assignment in attendantAssignmentRepository.GetByParkingLotId(parkingLotId))
+            {
+                // Prepare the raw tickets of each attendant.
+                var ticket = ticketRepository.GetByParkingAttendant(assignment.ParkingLotAttendantId);
+                ticket.RemoveAll(tic => tic.DateOfCreated >= from && tic.DateOfCreated <= to);
+
+                // Add to the final collection.
+                tickets.AddRange(ticket);
+            }
+
+            var targetParkingLot = parkingLotRepository.Get(parkingLotId);
+            var labelList = new List<string>();
+            for(var dt = from; dt <= to; dt = dt.AddDays(1))
+            {
+                labelList.Add(dt.ToShortDateString());
+            }
+            var reportItems = new List<int>();
+            for (var dt = from; dt <= to; dt = dt.AddDays(1))
+            {
+                reportItems.Add(tickets.Where(tic => tic.DateOfCreated == dt).Count());
+            }
+
+            ReportQueryModel report = new ReportQueryModel()
+            {
+                ParkingLotId = new List<Guid>() { targetParkingLot.Id },
+                ParkingLotName = new List<string>() { targetParkingLot.Name },
+                Label = labelList,
+                ReportItems = reportItems
+            };
+            return report;
+        }
+
+        ReportQueryModel IParkingLotService.GetReports()
+        {
+            throw new NotImplementedException();
         }
 
         List<StatusQueryModel> IParkingLotService.QueryStatus()

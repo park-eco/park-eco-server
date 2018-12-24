@@ -41,6 +41,13 @@ namespace ParkEco.CoreAPI.Repositories.Implementations
             return dbContext.Tickets.ToList();
         }
 
+        List<Ticket> ITicketRepository.GetByParkingAttendant(Guid parkingLotAttendantId)
+        {
+            return dbContext.Tickets
+                .Where(ticket => ticket.ParkingLotAttendantId == parkingLotAttendantId)
+                .ToList();
+        }
+
         void ITicketRepository.Update(Ticket ticket)
         {
             dbContext.Tickets.Update(ticket);

@@ -50,6 +50,7 @@ namespace ParkEco.CoreAPI
             services.AddTransient<ISessionRepository, SessionRepository>();
             services.AddTransient<ITicketRepository, TicketRepository>();
             services.AddTransient<IParkingLotAttendantRepository, ParkingLotAttendantRepository>();
+            services.AddTransient<IAttendantAssignmentRepository, AttendantAssignmentRepository>();
 
             services.AddTransient<IParkingLotService, ParkingLotService>();
             services.AddTransient<ISessionService, SessionService>();

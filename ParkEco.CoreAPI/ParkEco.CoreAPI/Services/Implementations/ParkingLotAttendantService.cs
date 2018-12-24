@@ -12,9 +12,15 @@ namespace ParkEco.CoreAPI.Services.Implementations
     {
         private readonly IParkingLotAttendantRepository parkingLotAttendantRepository;
         private readonly IAttendantAssignmentRepository attendantAssignmentRepository;
-        public ParkingLotAttendantService(IParkingLotAttendantRepository parkingLotAttendantRepository)
+        private readonly IParkingLotRepository parkingLotRepository;
+        public ParkingLotAttendantService(
+            IParkingLotAttendantRepository parkingLotAttendantRepository,
+            IAttendantAssignmentRepository attendantAssignmentRepository,
+            IParkingLotRepository parkingLotRepository)
         {
             this.parkingLotAttendantRepository = parkingLotAttendantRepository;
+            this.attendantAssignmentRepository = attendantAssignmentRepository;
+            this.parkingLotRepository = parkingLotRepository;
         }
 
         void IParkingLotAttendantService.DeleteAttendant(string username)
@@ -47,7 +53,20 @@ namespace ParkEco.CoreAPI.Services.Implementations
                 Email = email,
                 PhoneNumber = phoneNumber
             });
-            return parkingLotAttendantRepository.Get(username);
+
+            var newlyCreatedAttendant = parkingLotAttendantRepository.Get(username);
+
+            // For now, by default, adding a new attendant to all existing parking lots.
+            foreach (var parkingLot in parkingLotRepository.GetAll())
+            {
+                attendantAssignmentRepository.Create(new AttendantAssignment()
+                {
+                    ParkingLotAttendantId = newlyCreatedAttendant.Id,
+                    ParkingLotId = parkingLot.Id
+                });
+            }
+
+            return newlyCreatedAttendant;
         }
 
         /// <summary>
