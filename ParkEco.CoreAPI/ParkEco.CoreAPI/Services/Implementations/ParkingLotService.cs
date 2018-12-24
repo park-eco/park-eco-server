@@ -57,7 +57,7 @@ namespace ParkEco.CoreAPI.Services.Implementations
             {
                 // Prepare the raw tickets of each attendant.
                 var ticket = ticketRepository.GetByParkingAttendant(assignment.ParkingLotAttendantId);
-                ticket.RemoveAll(tic => tic.DateOfCreated >= from && tic.DateOfCreated <= to);
+                ticket.RemoveAll(tic => tic.DateOfCreated < from && tic.DateOfCreated > to);
 
                 // Add to the final collection.
                 tickets.AddRange(ticket);
@@ -69,18 +69,26 @@ namespace ParkEco.CoreAPI.Services.Implementations
             {
                 labelList.Add(dt.ToShortDateString());
             }
-            var reportItems = new List<int>();
+
+            var reportItems = new List<List<int>>();
+            var ticketCount = new List<int>();
             for (var dt = from; dt <= to; dt = dt.AddDays(1))
             {
-                reportItems.Add(tickets.Where(tic => tic.DateOfCreated == dt).Count());
+                var numberOfTickets = tickets.Where(tic => 
+                        tic.DateOfCreated.Day == dt.Day &&
+                        tic.DateOfCreated.Month == dt.Month &&
+                        tic.DateOfCreated.Year == dt.Year)
+                    .Count();
+                ticketCount.Add(numberOfTickets);
             }
+            reportItems.Add(ticketCount);
 
             ReportQueryModel report = new ReportQueryModel()
             {
                 ParkingLotId = new List<Guid>() { targetParkingLot.Id },
                 ParkingLotName = new List<string>() { targetParkingLot.Name },
                 Label = labelList,
-                ReportItems = reportItems
+                Data = reportItems
             };
             return report;
         }
