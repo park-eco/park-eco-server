@@ -34,3 +34,20 @@ Now you can run the backend server!
 ```
 dotnet run
 ```
+
+# Technology Stack 📚
+- .NET Core 2.1
+- Entity Framework
+
+# Contributing
+Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
+
+# Authors
+Lam Le, Khai Le, Linh Le, and Phat Nguyen.
+See also the list of contributors who participated in this project.
+
+# License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
+
+# Design Documentation
+The design documentation is currently in 1 language (Vietnamese) [here](https://drive.google.com/file/d/1h9vPLV3zv5bGFUXuRGKPwWl_H1Qbw0sJ/view?usp=sharing).
