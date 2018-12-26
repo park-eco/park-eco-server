@@ -100,5 +100,23 @@ namespace ParkEco.CoreAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPut("{username}")]
+        public ActionResult UpdateParkingLotAttendant(string username, [FromBody]RegisterCommand updateCommand)
+        {
+            try
+            {
+                parkingLotAttendantService.UpdateInformation(updateCommand.Username,
+                    updateCommand.Name,
+                    updateCommand.Email,
+                    updateCommand.PhoneNumber,
+                    updateCommand.Password);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }
